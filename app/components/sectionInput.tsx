@@ -1,7 +1,6 @@
 'use client'
 import React, { useState } from 'react'
 import { Textarea, Button, Progress, Snippet } from "@nextui-org/react";
-import SectionResult from './sectionResult';
 import { useRouter } from 'next/navigation';
 interface ResponseItem {
     label: string;
@@ -62,8 +61,8 @@ export default function SectionInput() {
         </div>
         <div>
         {responseData?.data?.result?.map(e => (
-                <Snippet className='flex flex-row gap-4 mt-2 w-full'>
-                    <span>{e.label} {e.score}</span>
+                <Snippet  className='flex flex-row gap-4 mt-2 w-full'>
+                    <span key={e.label}>{e.label} {e.score}</span>
                 </Snippet>
             ))}
         </div>
