@@ -1,4 +1,4 @@
-
+export const runtime = "edge";
 import SectionTitle from "./components/sectionTitle";
 import SectionInput from "./components/sectionInput";
 
