@@ -61,7 +61,7 @@ export default function SectionInput() {
         </div>
         <div>
         {responseData?.data?.result?.map(e => (
-                <Snippet  className='flex flex-row gap-4 mt-2 w-full'>
+                <Snippet key={e.label}  className='flex flex-row gap-4 mt-2 w-full'>
                     <span key={e.label}>{e.label} {e.score}</span>
                 </Snippet>
             ))}
