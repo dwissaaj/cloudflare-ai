@@ -2,13 +2,14 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
     const formData = await request.json()
+
     try {
         const response = await fetch(
-            `https://api.cloudflare.com/client/v4/accounts/991894ac6dd3102c990a84257eab2af5/ai/run/@cf/huggingface/distilbert-sst-2-int8`,
+            `${process.env.NEXT_MODEL_AI}`,
             {
-              headers: { Authorization: "Bearer Hlkv5JGDFU3IOV8DeKZH1ltxhc5Q8Hih2z36oE5h" },
+              headers: { Authorization: `Bearer ${process.env.NEXT_API_CLOUDFLARE}` },
               method: "POST",
-              body: JSON.stringify({text: `${formData}`}),
+              body: JSON.stringify(formData),
             }
           );
           

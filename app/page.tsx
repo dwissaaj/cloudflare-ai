@@ -1,7 +1,6 @@
-import { Button, Progress, Snippet, Textarea, Tooltip } from "@nextui-org/react";
+
 import SectionTitle from "./components/sectionTitle";
 import SectionInput from "./components/sectionInput";
-import SectionResult from "./components/sectionResult";
 
 
 
@@ -14,10 +13,6 @@ export default function Home() {
       </div>
       <div>
         <SectionInput />
-      </div>
-      <div>
-        <SectionResult />
-        
       </div>
       </div>
     </main>

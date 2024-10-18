@@ -1,15 +1,30 @@
 'use client'
 import React, { useState } from 'react'
-import { Textarea, Button, Progress } from "@nextui-org/react";
+import { Textarea, Button, Progress, Snippet } from "@nextui-org/react";
 import SectionResult from './sectionResult';
+import { useRouter } from 'next/navigation';
+interface ResponseItem {
+    label: string;
+    score: number;
+  }
 
+interface ApiResponse {
+    data: {
+        result: ResponseItem[];
+        success: boolean;
+        error: string[];
+        message: string[]
+    }
+}
+  
 export default function SectionInput() {
+    const router = useRouter()
     const [text, setText] = useState('')
     const [loading, setLoading] = useState(false)
     const [submitButton, setSubmitButton] = useState(true)
-    const [data, setData] = useState();
+    const [responseData, setresponseData] = useState<ApiResponse | null>(null);
     const submit =  async () => {
-        console.log('Data', text)
+        
         try {
             setLoading(true)
             const response = await fetch('/api/predict', {
@@ -20,10 +35,9 @@ export default function SectionInput() {
                   body: JSON.stringify({ text })
             })
             if(response) {
-                const data = await response.json();
-                setData(data)
-                console.log('here reponse', response)
-                console.log('here data', data)
+                const data : ApiResponse = await response.json();
+                setresponseData(data)
+                router.refresh();
             }
             
         } catch (error) {
@@ -31,6 +45,7 @@ export default function SectionInput() {
             console.log(error)
         } finally {
             setLoading(false)
+            // setSubmitButton(true)
         }
     }
     return (
@@ -42,13 +57,15 @@ export default function SectionInput() {
             }} placeholder="Sentence" size='lg' />
             <Progress color="primary" isIndeterminate={loading} aria-label="loading" size="sm" />
             <Button isDisabled={submitButton} onPress={submit} className='text-white font-bold' variant="shadow" color="primary"> Predict</Button>
-            {data?.data?.result?.map(e => (
-                <p>{e.label} {e.score}</p>
-            ))}
+            
            
         </div>
         <div>
-            {/* <SectionResult negative={data} positive={data} /> */}
+        {responseData?.data?.result?.map(e => (
+                <Snippet className='flex flex-row gap-4 mt-2 w-full'>
+                    <span>{e.label} {e.score}</span>
+                </Snippet>
+            ))}
         </div>
         </>
         
